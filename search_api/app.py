@@ -1,13 +1,21 @@
 from typing import Dict
 from elasticsearch import Elasticsearch
+from flask import Flask
 
+app = Flask(__name__)
 es = Elasticsearch(["http://elastic:changeme@localhost:9200/",])
 
 
-# res = es.search(index="jobs")
+@app.route("/")
+def index():
+    return {
+        "thing": "value",
+    }
 
-# print(type(res))
-
+@app.route("/search")
+def search():
+    query = request.args.get("q", "")
+    return job_title_search(query)
 
 def job_title_search(job_title: str) -> Dict:
     query_body = {"query": {"match": {"job_title": job_title}}}
