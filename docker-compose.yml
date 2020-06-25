@@ -6,4 +6,5 @@ elk:
     - "5044:5044"
     - "8080:8080"
   volumes:
+    - ./cfg/csv-input-filter.conf:/etc/logstash/conf.d/csv-input-filter.conf
     - ./cfg/http-input-filter.conf:/etc/logstash/conf.d/http-input-filter.conf

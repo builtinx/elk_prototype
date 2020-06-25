@@ -1,0 +1,73 @@
+<!doctype html>
+<head>
+<title>Jobs Searcharoo</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(function() {
+  $("#search").click(function(){
+    $("#dunkaroo").fadeIn("fast").fadeOut("fast");
+    var fields = $("input[name='fields']:checked").map(function(){
+      return $(this).val();
+    });
+    $.getJSON("/search",
+    {
+      q: $("#query").val(),
+      fields: fields.get().join(",")
+    })
+    .done(function(data) {
+      $("#results").empty();
+      $("#num_results").text(data.hits.total.value);
+      $.each(data.hits.hits, function(i, item){
+        var cardBody = $("<div>", {class: "card-body"})
+          .append($("<p>", {class: "card-text", text: "Company: " + item._source.COMPANY_NAME}))
+          .append($("<p>", {class: "card-text", text: "City: " + item._source.COMPANY_CITY}))
+          .append($("<p>", {class: "card-text", text: "Remote: " + item._source.REMOTE_STATUS}))
+        .append($("<a>", {class: "btn btn-primary", text: "Apply Now", role: "buton", href:  item._source.HOW_TO_APPLY}));
+
+        $("<div>", {class: "card"})
+          .append($("<div>", {class: "card-header", text: item._source.JOB_TITLE}))
+          .append(cardBody)
+          .appendTo("#results");
+      });
+    });
+  });
+});
+</script>
+</head>
+<body>
+  <div class="container">
+  <h1>Jobs Searcharoo</h1>
+  <div class="row">
+    <div class="col">
+      <h2>Search</h2>
+      <input type="text" placeholder="Your Search Query Here" id="query">
+      <button type="button" id="search">Searcharoo!</button>
+      <img src="https://mk0geekspincou9juj7n.kinstacdn.com/wp-content/uploads/2020/02/Dunkaroos.jpg" class="img-thumbnail" id="dunkaroo" style="display: none;">
+      <h2>Fields to Search</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Search?</th>
+            <th>Field Name</th>
+            <th>Field Type</th>
+          </tr>
+        </thead>
+        <tbody>
+      {% for field, meta in fields.items() %}
+          <tr>
+            <td><input type="checkbox" name="fields" value="{{ field }}"></td>
+            <td>{{ field }}</td>
+            <td>{{ meta["type"] }}</td>
+          </tr>
+      {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <h2><span id="num_results"></span> Results</h2>
+      <div id="results"></div>
+    </div>
+  </div>
+  </div>
+</body>

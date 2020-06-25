@@ -1,0 +1,2 @@
+﻿JOB_TITLE,JOB_ALIAS,AUTORENEW,BODY,BODY_SUMMARY,CREATED_AT,EXPERIENCE_LEVEL,EXPIRES,HOW_TO_APPLY,LOCATION,STATUS,REMOTE_STATUS,ABOUT_PERKS,COMPANY_ALIAS,COMPANY_CITY,COMPANY_NAME,ZIPCODE,YEAR_FOUNDED,TOTAL_EMPLOYEES,category_id,category_name
+Senior Product Person,/job/some-cool-slug,1,A great job description,A great summary,2020-06-25 17:14:12.000 +0000,0,,http://www.hamsterdance.org/hamsterdance/,1,1,NOT_REMOTE,,/company/robco,Boulder,Van Brunt Industries,80301,2013-01-01 00:00:00.000 +0000,300,154,Product
